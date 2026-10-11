@@ -1,0 +1,62 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+  database:
+    container_name: database
+    image: mysql:8
+    restart: always
+    ports:
+      - "3306"
+    environment:
+      MYSQL_HOST: ${DATABASE_HOST}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  cache:
+    container_name: cache
+    image: redis:7.4-alpine
+    restart: always
+    ports:
+      - "6379"
+    command: ["redis-server", "--requirepass", "${CACHE_PASSWORD}"]
+    environment:
+      REDIS_PASSWORD: ${CACHE_ROOT_PASSWORD}
+      REDIS_USER_PASSWORD: ${CACHE_PASSWORD}
+      REDIS_HOST: ${CACHE_HOST}
+    volumes:
+      - cache-data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${CACHE_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  worker:
+    container_name: worker
+    build: .
+    command: ["celery", "-A", "app.celery_app", "worker", "-l", "INFO"]
+    depends_on:
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+
+volumes:
+  db-data:
+  cache-data:

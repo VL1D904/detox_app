@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детоксик</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/detox.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.ico')}}">
+</head>
+<body>
+    <main>
+    <section class="info">
+        <article class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png')}}" alt="">
+            <h2>Детоксик</h1>
+        </article>
+        {% if username: %}
+            <article class="history">
+                <h5 id="historyTitle">История запросов</h5>
+            </article>
+        {% endif %}
+    </section>
+    <section class="app">
+        <article id="hello">
+            <h1>Добро пожаловать!</h1>
+            <h3>Приложение для перевода токсичного текста в нейтральный</h3>
+        </article>
+        <article id="chatDetoxic">
+            <button id="scrollButton">^</button>
+        </article>
+        <article class="message">
+            <textarea maxlength="150" placeholder="Что хотите детоксицировать?" id="toxInput"></textarea>
+            <span id="textLength">0/150 символов</span>
+            <button id="sendMessage" data-user="{{ username }}">↑</button>
+        </article>
+    </section>
+    {% if not username: %}
+        <section class="authentificate">
+            <a href="/sign_up">Регистрация</a>
+            <a href="/sign_in">Вход</a>
+        </section>
+    {% else: %}
+        <section class="user">
+            <article id="username">
+                <img src="{{ url_for('static', filename='images/avatar.png') }}" alt="">
+                <p>{{ username }}</p>
+            </article>
+            <a href="/logout" id="logout">Выйти</a>
+        </section>
+    {% endif %}
+    </main>
+</body>
+<script type="module" src="{{ url_for('static', filename='scripts/detox.js') }}"></script>
+{% if username: %}
+    <script src="{{ url_for('static', filename='scripts/user.js')}}"></script>
+    <script type="module" src="{{ url_for('static', filename='scripts/user_history.js') }}"></script>
+{% endif %}
+</html>

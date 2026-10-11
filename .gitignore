@@ -1,0 +1,10 @@
+.idea
+.venv
+.env
+.env.dev
+__pycache__
+detox_models/classifier_model/
+detox_models/classifier_tokenizer/
+detox_models/detox_model/
+detox_models/detox_tokenizer/
+detox_models/similarity_model/

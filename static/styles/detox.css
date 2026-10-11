@@ -1,0 +1,966 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Fira Sans", sans-serif;
+}
+
+html{
+    background-color: white;
+}
+
+body {
+    display: table;
+    margin: 0 auto;
+    width: 110em;
+    padding: 0 .5em;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.logo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    min-width: 10%;
+}
+
+
+.app{
+    min-width: 60%;
+    width: 60%;
+    height: 100vh;
+    border-right: solid .1em black;
+    border-left: solid .1em black;
+}
+
+.logo>img{
+    width: 6em;
+    user-select: none;
+    margin-top: 1em;
+    object-fit: contain;
+}
+
+.logo>h2{
+    font-size: 2.5em;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: "Montserrat", sans-serif;
+}
+
+.authentificate{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-top: 2em;
+    max-width: 15%;
+}
+
+.authentificate>a{
+    text-decoration: none;
+    color: black;
+}
+
+.authentificate>a:first-child{
+    border: solid green .2em;
+    border-radius: 1em;
+    padding: .5em;
+    font-size: 1.5em;
+    transition: .5s;
+}
+
+.authentificate>a:first-child:hover{
+    font-size: 1.75em;
+    transition: 1s;
+}
+
+.authentificate>a:last-child{
+    font-size: 2em;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.authentificate>a:last-child:hover{
+    font-size: 2.1em;
+    font-weight: 700;
+    transition: .3s;
+}
+
+#hello{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    height: 90vh;
+}
+
+#hello>h1{
+    font-size: 3em;
+    margin-bottom: .1em;
+}
+
+#hello>h3{
+    font-size: 1.5em;
+}
+
+.message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#toxInput{
+    width: 50rem;
+    font-size: 1.7em;
+    padding: .3em .5em;
+    border-radius: .7em;
+    position: relative;
+    max-height: 5em;
+    padding-right: 3em;
+    border-color: black;
+}
+
+#textLength{
+    position: absolute;
+    color: gray;
+    bottom: 10%;
+    font-size: 1em;
+}
+
+.message>button{
+    position: absolute;
+    font-size: 2.5em;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    background-color: rgb(226, 226, 226);
+    cursor: pointer;
+    border: none;
+    margin-left: 45rem;
+    color: rgb(51, 51, 51);
+}
+
+#chatDetoxic {
+    display: none;
+    margin: 5vh auto;
+    flex-direction: column;
+    height: 80vh;
+    width: 90%;
+    overflow-y: auto;
+    padding-top: 1em;
+    padding-right: 1em;
+    scroll-behavior: smooth;
+}
+
+#chatDetoxic::-webkit-scrollbar{
+    width: .3em;
+}
+
+#chatDetoxic::-webkit-scrollbar-thumb{
+     background-color: rgb(162, 162, 162);
+}
+
+#chatDetoxic::-webkit-scrollbar-track{
+    background-color: rgb(203, 203, 203);
+
+}
+
+.userMessage{
+    display: flex;
+    align-self: flex-end;
+    font-size: 1.5em;
+    max-width: 30rem;
+    background-color: rgba(207, 207, 207, 0.647);
+    box-shadow: .1em .1em .5em rgb(92, 92, 92);
+    padding: .5em;
+    border-radius: 1rem;
+    line-height: 1.3;
+    margin-bottom: 1.5em;
+}
+
+.userMessage>pre{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    -moz-pre-wrap: pre-wrap;
+    -o-pre-wrap: pre-wrap;
+    max-width: 100%;
+}
+
+.modelMessage{
+    display: flex;
+    gap: .5em;
+    margin-bottom: 3em;
+}
+
+.modelMessage>img{
+    width: 4em;
+    height: 4em;
+    user-select: none;
+    object-fit: contain;
+}
+
+.modelAnswer{
+    max-width: 25rem;
+}
+
+.modelAnswer>h5{
+    font-size: 1.5em;
+    margin: .3em 0;
+
+}
+
+.modelText{
+    font-size: 1.3em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    -moz-pre-wrap: pre-wrap;
+    -o-pre-wrap: pre-wrap;
+    max-width: 100%;
+    animation: textAnimation .3s;
+
+}
+
+@keyframes textAnimation {
+    0% {opacity: 0;}
+    100% {opacity: 1;}    
+}
+
+
+.modelAnswer>span{
+    color: gray;
+    font-size: .9em;
+}
+
+.spinner{
+    animation: spin 2s linear infinite;
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    border-top: solid .1em rgb(61, 61, 61);
+}
+
+@keyframes spin {
+    100% {transform: rotate(360deg);}
+}
+
+#scrollButton{
+    position: absolute;
+    bottom: 95%;
+    left: 50%;
+    width: 2rem;
+    height: 2rem;
+    background-color: white;
+    border-radius: 50%;
+    border: solid .1rem rgb(61, 61, 61);
+    font-size: 2em;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(-3em);
+}
+
+.user{
+    max-width: 15%;
+    display: flex;
+    flex-direction: column;
+    gap: .3em;
+}
+
+#username{
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    align-items: center;
+}
+
+#username>img{
+    width: 4em;
+    object-fit: cover;
+}
+
+
+#username>p{
+    font-size: 1.3em;
+}
+
+#logout{
+    display: none;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    border: none;
+    font-size: 1.25em;
+    box-shadow: .1em .1em .3em black;
+    text-align: left;
+    padding: .1rem .2rem;
+    width: 10rem;
+    height: 2.5rem;
+    animation: logoutView 1s;
+    padding-top: .3rem;
+}
+
+@keyframes logoutView {
+    0% {opacity: 0; transform: translateY(-2em);}
+    100% {opacity: 1; transform: translateY(0);}
+}
+
+.history{
+    margin-top: 3em;
+    overflow-y: auto;
+    height: 10%;
+    max-height: 50rem;
+    max-width: 20rem;
+    padding-right: 1.25rem;
+}
+
+.history>h5{
+    color: rgb(36, 36, 36);
+    font-size: 1.15em;
+}
+
+.messageHistory{
+    margin-top: 1rem;
+    cursor: pointer;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    -moz-pre-wrap: pre-wrap;
+    -o-pre-wrap: pre-wrap;
+    max-width: 100%;
+}
+
+@media screen and (max-width: 1850px) and (min-width: 1600px){
+    body {
+        width: 95em;
+    }
+    .logo{
+        gap: .75em;
+    }
+
+    .logo>img{
+        width: 5em;
+    }
+
+    .logo>h2{
+        font-size: 2em;
+    }
+
+    .authentificate{
+        gap: .75em;
+        margin-top: 1.75em;
+    }
+
+    .authentificate>a:first-child{
+        border: solid green .1em;
+
+        font-size: 1.25em;
+    }
+
+    .authentificate>a:first-child:hover{
+        font-size: 1.5em;
+    }
+
+    .authentificate>a:last-child{
+        font-size: 1.75em;
+    }
+
+    .authentificate>a:last-child:hover{
+        font-size: 2em;
+    }
+
+    #hello>h1{
+        font-size: 2.75em;
+        margin-bottom: .1em;
+    }
+
+    #hello>h3{
+        font-size: 1.25em;
+    }
+
+    #toxInput{
+        font-size: 1.5em;
+    }
+
+    #chatDetoxic::-webkit-scrollbar{
+        width: .3em;
+    }
+
+
+    .userMessage{
+        font-size: 1.25em;
+        max-width: 24rem;
+    }
+
+    .modelMessage>img{
+        width: 3em;
+        height: 3em;
+    }
+
+    .modelAnswer{
+        max-width: 24rem;
+    }
+
+    .modelAnswer>h5{
+        font-size: 1.25em;
+        margin: .3em 0;
+    }
+
+    .modelText{
+        font-size: 1.1em;
+    }
+
+    .modelAnswer>span{
+        color: gray;
+        font-size: .8em;
+    }
+
+    .spinner{
+        height: 1.75em;
+        width: 1.75em;
+    }
+
+    #scrollButton{
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 1.75em;
+    }
+
+    #username>img{
+        width: 3.5em;
+    }
+}
+
+
+@media screen and (max-width: 1599px) and (min-width: 1366px){
+    body {
+        width: 83em;
+    }
+    .logo{
+        gap: .65em;
+    }
+
+    .logo>img{
+        width: 4.75em;
+    }
+
+    .logo>h2{
+        font-size: 1.85em;
+    }
+
+
+    .authentificate>a:first-child{
+        border: solid green .15em;
+
+        font-size: 1.15em;
+    }
+
+    .authentificate>a:first-child:hover{
+        font-size: 1.3em;
+    }
+
+    .authentificate>a:last-child{
+        font-size: 1.65em;
+    }
+
+    .authentificate>a:last-child:hover{
+        font-size: 1.9em;
+    }
+
+    #hello>h1{
+        font-size: 2.65em;
+        margin-bottom: .1em;
+    }
+
+    #hello>h3{
+        font-size: 1.15em;
+    }
+
+    #toxInput{
+        font-size: 1.4em;
+        width: 40rem;
+    }
+
+    #chatDetoxic::-webkit-scrollbar{
+        width: .3em;
+    }
+
+
+    .userMessage{
+        font-size: 1.15em;
+        max-width: 23rem;
+    }
+
+    .modelMessage>img{
+        width: 3em;
+        height: 3em;
+    }
+
+    .modelAnswer{
+        max-width: 24rem;
+    }
+
+    .modelAnswer>h5{
+        font-size: 1.25em;
+        margin: .3em 0;
+    }
+
+    .modelText{
+        font-size: 1.1em;
+    }
+
+    .modelAnswer>span{
+        color: gray;
+        font-size: .8em;
+    }
+
+    .spinner{
+        height: 1.75em;
+        width: 1.75em;
+    }
+
+    #scrollButton{
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 1.75em;
+    }
+
+    .history{
+        max-width: 15rem;
+    }
+
+    .history>h5{
+        font-size: 1.15em;
+    }
+
+    .message>button{
+        font-size: 2.25em;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-left: 35rem;
+    }
+    #username>img{
+        width: 3em;
+    }
+
+    #username>p{
+        font-size: 1.1em;
+    }
+
+    #logout{
+        font-size: 1em;
+        width: 10rem;
+    }
+}
+
+@media screen and (max-width: 1365px) and (min-width: 1024px){
+    body {
+        width: 60em;
+    }
+    .logo{
+        gap: .15em;
+    }
+
+    .logo>img{
+        width: 4em;
+    }
+
+    .logo>h2{
+        font-size: 1.35em;
+    }
+
+    .authentificate{
+        gap: .5em;
+    }
+
+    .authentificate>a:first-child{
+        border: solid green .15em;
+        font-size: 1em;
+    }
+
+    .authentificate>a:first-child:hover{
+        font-size: 1.1em;
+    }
+
+    .authentificate>a:last-child{
+        font-size: 1.2em;
+    }
+
+    .authentificate>a:last-child:hover{
+        font-size: 1.3em;
+    }
+
+    #hello>h1{
+        font-size: 2.25em;
+        margin-bottom: .1em;
+    }
+
+    #hello>h3{
+        font-size: .8em;
+    }
+
+    #toxInput{
+        font-size: 1.2em;
+        width: 30rem;
+    }
+
+    #chatDetoxic::-webkit-scrollbar{
+        width: .3em;
+    }
+
+
+    .userMessage{
+        font-size: 1.1em;
+        max-width: 17rem;
+    }
+
+    .modelMessage>img{
+        width: 2.5em;
+        height: 2.5em;
+    }
+
+    .modelAnswer{
+        max-width: 15rem;
+    }
+
+    .modelAnswer>h5{
+        font-size: 1.15em;
+        margin: .3em 0;
+    }
+
+    .modelText{
+        font-size: 1em;
+    }
+
+    .modelAnswer>span{
+        color: gray;
+        font-size: .6em;
+    }
+
+    .spinner{
+        height: 1.5em;
+        width: 1.5em;
+    }
+
+    #scrollButton{
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 1.5em;
+    }
+
+    .history{
+        max-width: 10rem;
+        max-height: 28rem;
+    }
+
+    .history>h5{
+        font-size: 1em;
+    }
+
+    .messageHistory{
+        margin-top: .5rem;
+        font-size: .75em;
+        max-width: 100%;
+    }
+
+    .message>button{
+        font-size: 2em;
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-left: 26rem;
+    }
+    #username>img{
+        width: 2.5em;
+    }
+
+    #username>p{
+        font-size: 1em;
+    }
+
+    #logout{
+        font-size: .9em;
+        width: 8rem;
+        height: 2rem;
+    }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 600px){
+    body {
+        width: 40em;
+    }
+    .logo{
+        gap: .15em;
+    }
+
+    .logo>img{
+        width: 2.25em;
+    }
+
+    .logo>h2{
+        margin-top: .3em;
+        font-size: 1em;
+    }
+
+    .authentificate{
+        gap: .5em;
+    }
+
+    .authentificate>a:first-child{
+        border: solid green .1em;
+        font-size: .8em;
+    }
+
+    .authentificate>a:first-child:hover{
+        font-size: .9em;
+    }
+
+    .authentificate>a:last-child{
+        font-size: 1em;
+    }
+
+    .authentificate>a:last-child:hover{
+        font-size: 1.1em;
+    }
+
+    #hello>h1{
+        font-size: 2.25em;
+        margin-bottom: .1em;
+    }
+
+    #hello>h3{
+        font-size: .8em;
+    }
+
+    #toxInput{
+        font-size: 1.2em;
+        width: 30rem;
+    }
+
+    #chatDetoxic::-webkit-scrollbar{
+        width: .3em;
+    }
+
+
+    .userMessage{
+        font-size: 1.1em;
+        max-width: 17rem;
+    }
+
+    .modelMessage>img{
+        width: 2.5em;
+        height: 2.5em;
+    }
+
+    .modelAnswer{
+        max-width: 15rem;
+    }
+
+    .modelAnswer>h5{
+        font-size: 1.15em;
+        margin: .3em 0;
+    }
+
+    .modelText{
+        font-size: 1em;
+    }
+
+    .modelAnswer>span{
+        color: gray;
+        font-size: .6em;
+    }
+
+    .spinner{
+        height: 1.5em;
+        width: 1.5em;
+    }
+
+    #scrollButton{
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 1.5em;
+    }
+
+    .history{
+        max-width: 10rem;
+        max-height: 28rem;
+    }
+
+    .history>h5{
+        font-size: 1em;
+    }
+
+    .messageHistory{
+        margin-top: .5rem;
+        font-size: .75em;
+        max-width: 100%;
+    }
+
+    .message>button{
+        font-size: 2em;
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-left: 26rem;
+    }
+    #username>img{
+        width: 2.5em;
+    }
+
+    #username>p{
+        font-size: 1em;
+    }
+
+    #logout{
+        font-size: .9em;
+        width: 8rem;
+        height: 2rem;
+    }
+}
+
+@media screen and (max-width: 600px) and (min-width: 300px){
+    body {
+        width: 17em;
+    }
+    .logo{
+        gap: .05em;
+    }
+
+    .logo>img{
+        width: 1.75em;
+    }
+
+    .logo>h2{
+        margin-top: 1.5em;
+        font-size: .5em;
+    }
+
+    .authentificate{
+        gap: .25em;
+    }
+
+    .authentificate>a:first-child{
+        padding: .35em .35em;
+        border: solid green .1em;
+        font-size: .6em;
+    }
+
+    .authentificate>a:first-child:hover{
+        font-size: .9em;
+    }
+
+    .authentificate>a:last-child{
+        font-size: .7em;
+    }
+
+    .authentificate>a:last-child:hover{
+        font-size: 1.1em;
+    }
+
+    #hello>h1{
+        font-size: 1.25em;
+        margin-bottom: .1em;
+    }
+
+    #hello>h3{
+        font-size: .4em;
+    }
+
+    #toxInput{
+        font-size: .5em;
+        width: 10rem;
+    }
+
+    #textLength{
+        font-size: .5em;
+    }
+
+    #chatDetoxic::-webkit-scrollbar{
+        width: .3em;
+    }
+
+
+    .userMessage{
+        font-size: .7em;
+        max-width: 6rem;
+    }
+
+    .modelMessage>img{
+        width: 1em;
+        height: 1em;
+    }
+
+    .modelAnswer{
+        max-width: 5rem;
+    }
+
+    .modelAnswer>h5{
+        font-size: .5em;
+        margin: .3em 0;
+    }
+
+    .modelText{
+        font-size: .45em;
+    }
+
+    .modelAnswer>span{
+        color: gray;
+        font-size: .3em;
+    }
+
+    .modelMessage{
+        margin-bottom: 0;
+    }
+
+    .spinner{
+        height: .8em;
+        width: .8em;
+    }
+
+    #scrollButton{
+        width: .75rem;
+        height: .75rem;
+        font-size: 1em;
+    }
+
+    .history{
+        max-width: 3rem;
+        max-height: 15rem;
+    }
+
+    .history>h5{
+        font-size: .5em;
+    }
+
+    .messageHistory{
+        margin-top: .5rem;
+        font-size: .4em;
+        max-width: 100%;
+    }
+
+    .message>button{
+        font-size: 1em;
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-left: 8rem;
+    }
+    #username{
+        gap: .1em;
+    }
+    #username>img{
+        width: 1em;
+    }
+
+    #username>p{
+        font-size: .5em;
+    }
+
+    #logout{
+        font-size: .6em;
+        width: 3rem;
+        height: 1rem;
+    }
+}
