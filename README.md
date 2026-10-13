@@ -47,7 +47,7 @@
     ```
 2. Настройте переменные окружения:
     ```bash
-   cp .env.template
+   cp .env.template .env
     ```
 3. Запустите контейнеры
     ```bash
